@@ -29,92 +29,96 @@ class DogImageApp(tk.Tk):
 
         self.title("Dog Diary")
         self.resizable(False, False) 
-        self.geometry("680x480")
-
-        self.dog_image_label = tk.Label(self)
-        self.dog_image_label.pack()
-
-        self.wisdom_label = tk.Label(self, wraplength=400)
-        self.wisdom_label.pack()
+        self.geometry("480x480")
 
         self.show_button = tk.Button(self, text="What am I thinking about cats?", command=self.show_dog_and_wisdom)
-        self.show_button.pack()
+        self.show_button.grid(row=0, column=1, columnspan=3, padx=10, pady=10)
 
-    def show_dog_image(self):
+        self.dog_image_label = tk.Label(self)
+        self.dog_image_label.grid(row=1, column=1, columnspan=3, padx=10, pady=10)
+
+        self.wisdom_label = tk.Label(self, wraplength=400)
+        self.wisdom_label.grid(row=2, column=1, columnspan=3, padx=10, pady=10)
+
+    def show_dog_and_wisdom(self):
         """
-        Fetches a random dog image from the "https://dog.ceo/api/breeds/image/random" API,
-        displays it in the `dog_image_label`, and handles potential errors.
-
-        - Makes a GET request to the dog image API.
-        - Parses the JSON response to extract the image URL.
-        - Sends a GET request to download the image data in stream mode.
-        - Checks the response status code.
-        - If successful (status code 200):
-            - Opens the image using Pillow's `Image.open` method.
-            - Resizes the image to 400x300 pixels to fit the label better.
-            - Converts the image to a format compatible with Tkinter's `ImageTk` class.
-            - Updates the `dog_image_label` with the new image.
-        - If unsuccessful:
-            - Displays an error message in the `dog_image_label`.
+        Fetches a random dog image and cat fact concurrently and displays them.
+        Handles potential errors from both API requests.
         """
-        response = requests.get("https://dog.ceo/api/breeds/image/random")
-        data = response.json()
+        try:
+            dog_response = requests.get("https://dog.ceo/api/breeds/image/random")
+            dog_data = dog_response.json()
+            image_url = dog_data["message"]
 
-        image_url = data["message"]
+            cat_response = requests.get("https://catfact.ninja/fact")
+            cat_data = cat_response.json()
+            wisdom_text = cat_data["fact"]
+
+            self.show_dog_image(image_url)
+            self.show_wisdom(wisdom_text)
+
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            self.dog_image_label.configure(text="Error fetching data")
+            self.wisdom_label.configure(text="Failed to retrieve cat fact")
+
+    def show_dog_image(self, image_url):
+        """
+        Downloads and displays the dog image at the given URL.
+        Resizes the image and handles potential download errors during image processing.
+
+        Args:
+            image_url (str): The URL of the dog image to download.
+        """
         image_response = requests.get(image_url, stream=True)
 
         if image_response.status_code == 200:
-            image = Image.open(image_response.raw)
-            image = image.resize((400, 300))
-            image_tk = ImageTk.PhotoImage(image)
+            try:
+                image = Image.open(image_response.raw)
+                image = image.resize((400, 300))
+                image_tk = ImageTk.PhotoImage(image)
 
-            self.dog_image_label.configure(image=image_tk)
-            self.dog_image_label.image = image_tk
+                self.dog_image_label.configure(image=image_tk)
+                self.dog_image_label.image = image_tk
+            except Exception as e:
+                print(f"Error processing image: {e}")
+                self.dog_image_label.configure(text="Error displaying image")  # Set error message for label
+
         else:
-            self.dog_image_label.configure(text="Error downloading image")
+            print(f"Error downloading image: {image_response.status_code}")
+            self.image_label.configure(text="Error downloading image")  # Set error message for label
 
-    def show_wisdom(self):
+    def show_wisdom(self, wisdom_text):
         """
         Fetches a random cat fact from the "https://catfact.ninja/fact" API,
         formats the text for better display in the `wisdom_label`, and updates the label.
 
-        - Makes a GET request to the cat fact API to retrieve a JSON response containing a random cat fact.
-        - Parses the JSON response to extract the "fact" field, which holds the actual cat fact text.
-        - Initializes an empty list `lines` to store the formatted text with line breaks.
-        - Sets a `max_length` variable to define the maximum characters allowed per line for better display.
-        - Iterates through each word in the `wisdom_text` split by whitespace:
-            - If `lines` is not empty (meaning there's already existing formatted text):
-                - Checks if the combined length of the current line (including spaces) and the new word exceeds the `max_length`.
-                    - If it does, append an empty string to `lines` to start a new line.
-            - Otherwise, append an empty string to `lines` to initiate the first line.
-            - In both cases, append the current word with a space to the last element in `lines`.
-        - Joins the formatted lines in `lines` with newline characters (`\n`) and updates the `wisdom_label` with the final text.
+        Args:
+            wisdom_text (str): The raw cat fact retrieved from the API.
         """
-        response = requests.get("https://catfact.ninja/fact")
-        data = response.json()
 
-        wisdom_text = data["fact"]
-        lines = []
-        max_length = 68
+        # No need to repeat the API call here, 
+        # assume `wisdom_text` already contains the fact.
+
+        lines = []  # List to store formatted lines with line breaks
+        max_length = 68  # Maximum characters per line for better display
 
         for word in wisdom_text.split():
+            # If lines is not empty (there's existing formatted text)
             if lines:
+                # Check if the current line + new word exceeds max_length
                 if len(" ".join(lines[-1:])) + len(word) > max_length:
-                    lines.append("")
+                    lines.append("")  # Start a new line
             else:
-                lines.append("")
+                lines.append("")  # Initiate the first line
+
+            # Append current word with a space to the last line in 'lines'
             lines[-1] += " " + word
 
+        # Join formatted lines with newline characters and update the label
         self.wisdom_label.config(text="\n".join(lines))
 
-    def show_dog_and_wisdom(self):
-        """
-        Calls the `show_dog_image` and `show_wisdom` methods sequentially to display a random dog image and a random cat fact.
-        """
-        self.show_dog_image()
-        self.show_wisdom()
-
-
+# Run the main application loop if this script is executed directly
 if __name__ == "__main__":
     app = DogImageApp()
     app.mainloop()
