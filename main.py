@@ -65,7 +65,7 @@ class DogImageApp(tk.Tk):
     def show_dog_image(self, image_url):
         """
         Downloads and displays the dog image at the given URL.
-        Resizes the image and handles potential download errors during image processing.
+        Resizes the image while maintaining its aspect ratio and handles potential download errors during image processing.
 
         Args:
             image_url (str): The URL of the dog image to download.
@@ -75,18 +75,30 @@ class DogImageApp(tk.Tk):
         if image_response.status_code == 200:
             try:
                 image = Image.open(image_response.raw)
-                image = image.resize((400, 300))
+
+                # Calculate the new dimensions to maintain aspect ratio
+                label_width, label_height = 400, 300  # Target dimensions for the label
+
+                image_width, image_height = image.size
+
+                # Determine the scaling factor based on the limiting dimension
+                scale_factor = min(label_width / image_width, label_height / image_height)
+
+                # Resize the image while maintaining aspect ratio
+                new_width = int(image_width * scale_factor)
+                new_height = int(image_height * scale_factor)
+                image = image.resize((new_width, new_height))
+
                 image_tk = ImageTk.PhotoImage(image)
 
                 self.dog_image_label.configure(image=image_tk)
                 self.dog_image_label.image = image_tk
             except Exception as e:
                 print(f"Error processing image: {e}")
-                self.dog_image_label.configure(text="Error displaying image")  # Set error message for label
-
+                self.dog_image_label.configure(text="Error displaying image")
         else:
             print(f"Error downloading image: {image_response.status_code}")
-            self.image_label.configure(text="Error downloading image")  # Set error message for label
+            self.dog_image_label.configure(text="Error downloading image")
 
     def show_wisdom(self, wisdom_text):
         """
