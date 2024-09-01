@@ -2,6 +2,8 @@ from ctypes import windll
 windll.shcore.SetProcessDpiAwareness(1)
 
 import tkinter as tk
+import customtkinter
+from CTkMessagebox import CTkMessagebox
 import requests
 from PIL import Image, ImageTk
 
@@ -29,16 +31,33 @@ class DogImageApp(tk.Tk):
 
         self.title("Dog Diary")
         self.resizable(False, False) 
-        self.geometry("480x480")
+        self.geometry("580x580")
 
-        self.show_button = tk.Button(self, text="What am I thinking about cats?", command=self.show_dog_and_wisdom)
-        self.show_button.grid(row=0, column=1, columnspan=3, padx=10, pady=10)
+        self.button_frame = tk.Frame(self)
+        self.image_frame = tk.Frame(self)
+        self.wisdom_frame = tk.Frame(self)
 
-        self.dog_image_label = tk.Label(self)
-        self.dog_image_label.grid(row=1, column=1, columnspan=3, padx=10, pady=10)
+        self.button = customtkinter.CTkButton(master=self.button_frame,
+                                text="What am I thinking about cats?",
+                                command=self.show_dog_and_wisdom,
+                                width=300,
+                                text_color="white",
+                                fg_color="#2D1E2F",
+                                hover_color="#F15946")
+        self.button.grid(row=1, column=1, columnspan=1, padx=10, pady=10)
 
-        self.wisdom_label = tk.Label(self, wraplength=400)
-        self.wisdom_label.grid(row=2, column=1, columnspan=3, padx=10, pady=10)
+        
+        self.dog_image_label = customtkinter.CTkLabel(self.image_frame, text='')
+        self.dog_image_label.grid(row=1, column=1, columnspan=3, padx=30, pady=10)
+
+
+        self.wisdom_label = customtkinter.CTkLabel(self.wisdom_frame, wraplength=400, text='')
+        self.wisdom_label.grid(row=2, column=1, columnspan=3, padx=30, pady=10)
+
+
+        self.button_frame.pack(side=tk.TOP, padx=10, pady=10)
+        self.image_frame.pack(side=tk.TOP, padx=10, pady=10)
+        self.wisdom_frame.pack(side=tk.TOP, padx=10, pady=10)
 
     def show_dog_and_wisdom(self):
         """
@@ -77,7 +96,7 @@ class DogImageApp(tk.Tk):
                 image = Image.open(image_response.raw)
 
                 # Calculate the new dimensions to maintain aspect ratio
-                label_width, label_height = 400, 300  # Target dimensions for the label
+                label_width, label_height = 300, 200  # Target dimensions for the label
 
                 image_width, image_height = image.size
 
@@ -89,10 +108,10 @@ class DogImageApp(tk.Tk):
                 new_height = int(image_height * scale_factor)
                 image = image.resize((new_width, new_height))
 
-                image_tk = ImageTk.PhotoImage(image)
-
+                image_tk = customtkinter.CTkImage(light_image=image, size=(new_width , new_height))
                 self.dog_image_label.configure(image=image_tk)
                 self.dog_image_label.image = image_tk
+
             except Exception as e:
                 print(f"Error processing image: {e}")
                 self.dog_image_label.configure(text="Error displaying image")
@@ -128,7 +147,7 @@ class DogImageApp(tk.Tk):
             lines[-1] += " " + word
 
         # Join formatted lines with newline characters and update the label
-        self.wisdom_label.config(text="\n".join(lines))
+        self.wisdom_label.configure(text="\n".join(lines))
 
 # Run the main application loop if this script is executed directly
 if __name__ == "__main__":
