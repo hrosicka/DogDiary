@@ -6,6 +6,7 @@ import customtkinter
 from CTkMessagebox import CTkMessagebox
 import requests
 from PIL import Image, ImageTk
+import os  # Import the 'os' module for file path manipulation
 
 
 class DogImageApp(tk.Tk):
@@ -29,6 +30,8 @@ class DogImageApp(tk.Tk):
         """
         super().__init__()
 
+        self.current_image = None  # Define current_image as a class variable
+
         self.title("Dog Diary")
         self.resizable(False, False) 
         self.geometry("580x580")
@@ -45,6 +48,16 @@ class DogImageApp(tk.Tk):
                                 fg_color="#2D1E2F",
                                 hover_color="#F15946")
         self.button.grid(row=1, column=1, columnspan=1, padx=10, pady=10)
+
+        self.save_button = customtkinter.CTkButton(master=self.button_frame,
+                                                   text="Save Image",
+                                                   command=self.save_image,
+                                                   width=150,
+                                                   text_color="white",
+                                                   fg_color="#2D1E2F",
+                                                   hover_color="#F15946")
+        self.save_button.grid(row=2, column=1, columnspan=1, padx=10, pady=10)
+
 
         
         self.dog_image_label = customtkinter.CTkLabel(self.image_frame, text='')
@@ -94,6 +107,7 @@ class DogImageApp(tk.Tk):
         if image_response.status_code == 200:
             try:
                 image = Image.open(image_response.raw)
+                self.current_image = image  # Assign the processed image to current_image
 
                 # Calculate the new dimensions to maintain aspect ratio
                 label_width, label_height = 300, 200  # Target dimensions for the label
@@ -148,6 +162,28 @@ class DogImageApp(tk.Tk):
 
         # Join formatted lines with newline characters and update the label
         self.wisdom_label.configure(text="\n".join(lines))
+
+    def save_image(self):
+        """
+        Saves the currently displayed dog image to the disk.
+
+        If no image is currently loaded, a warning message is displayed.
+        """
+
+        if not self.current_image:
+            CTkMessagebox(title="Error", message="No image to save.")
+            return
+
+        # Get the file path where the image will be saved (using a file dialog)
+        file_path = tk.filedialog.asksaveasfilename(defaultextension=".png", filetypes=[("PNG image", "*.png")])
+
+        if file_path:
+            try:
+                # Save the image using the PIL library
+                self.current_image.save(file_path)
+                CTkMessagebox(title="Success", message="Image saved successfully.")
+            except Exception as e:
+                CTkMessagebox(title="Error", message=f"An error occurred while saving the image: {str(e)}")
 
 # Run the main application loop if this script is executed directly
 if __name__ == "__main__":
