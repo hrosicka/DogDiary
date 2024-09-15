@@ -35,7 +35,7 @@ class DogImageApp(tk.Tk):
 
         self.title("Dog Diary")
         self.resizable(False, False) 
-        self.geometry("580x580")
+        self.geometry("600x600")
 
         self.button_frame = tk.Frame(self)
         self.image_frame = tk.Frame(self)
@@ -48,7 +48,7 @@ class DogImageApp(tk.Tk):
                                 text_color="white",
                                 fg_color="#2D1E2F",
                                 hover_color="#F15946")
-        self.button.grid(row=1, column=1, columnspan=2, padx=10, pady=5)
+        self.button.grid(row=1, column=1, columnspan=3, padx=2, pady=5)
 
         self.save_button = customtkinter.CTkButton(master=self.button_frame,
                                                    text="Save Image",
@@ -57,7 +57,7 @@ class DogImageApp(tk.Tk):
                                                    text_color="white",
                                                    fg_color="#2D1E2F",
                                                    hover_color="#F15946")
-        self.save_button.grid(row=2, column=1, columnspan=2, padx=10, pady=5)
+        self.save_button.grid(row=2, column=1, columnspan=1, padx=2, pady=5)
 
         self.copy_button = customtkinter.CTkButton(
             master=self.button_frame,
@@ -68,7 +68,18 @@ class DogImageApp(tk.Tk):
             fg_color="#2D1E2F",
             hover_color="#F15946",
         )
-        self.copy_button.grid(row=3, column=1, columnspan=2, padx=10, pady=5)
+        self.copy_button.grid(row=2, column=2, columnspan=1, padx=2, pady=5)
+
+        self.save_wisdom_button = customtkinter.CTkButton(
+            master=self.button_frame,
+            text="Save Wisdom",
+            command=self.save_wisdom,
+            width=150,
+            text_color="white",
+            fg_color="#2D1E2F",
+            hover_color="#F15946",
+        )
+        self.save_wisdom_button.grid(row=2, column=3, columnspan=1, padx=2, pady=5)
 
         
         self.dog_image_label = customtkinter.CTkLabel(self.image_frame, text='')
@@ -201,11 +212,38 @@ class DogImageApp(tk.Tk):
         wisdom_text = self.wisdom_label.cget("text")
 
         if wisdom_text == "":
-            CTkMessagebox(title="Error", message="No text to copy.")
+            CTkMessagebox(title="Error", message="No wisdom text to copy.")
             return
         
         pyperclip.copy(wisdom_text)
         CTkMessagebox(title="Success", message="Text has been copied to the clipboard.")
+
+    def save_wisdom(self):
+        """
+        Saves the current wisdom text to a text file.
+
+        If no wisdom text is available, displays a warning message.
+        """
+        wisdom_text = self.wisdom_label.cget("text")
+
+        if wisdom_text == "":
+            CTkMessagebox(title="Error", message="No wisdom text to save.")
+            return
+
+        # Get the file path where the text will be saved (using a file dialog)
+        file_path = tk.filedialog.asksaveasfilename(
+            defaultextension=".txt", filetypes=[("Text file", "*.txt")]
+        )
+
+        if file_path:
+            try:
+                # Open the file in write mode and write the wisdom text
+                with open(file_path, "w") as f:
+                    f.write(wisdom_text)
+
+                CTkMessagebox(title="Success", message="Wisdom saved successfully.")
+            except Exception as e:
+                CTkMessagebox(title="Error", message=f"An error occurred while saving: {str(e)}")
 
        
 
