@@ -123,7 +123,22 @@ class DogImageApp(tk.Tk):
     def show_dog_and_wisdom(self):
         """
         Fetches a random dog image and cat fact concurrently and displays them.
-        Handles potential errors from both API requests.
+        Handles potential errors gracefully to provide informative messages to the user.
+
+        This method performs the following steps:
+
+        1. Initiates concurrent API requests:
+            - Fetches a random dog image URL from the "dog.ceo" API.
+            - Fetches a random cat fact from the "catfact.ninja" API.
+        2. Parses the JSON responses from both APIs for data extraction.
+        3. Extracts the dog image URL and cat fact text from the respective responses.
+        4. Calls helper methods to display the retrieved dog image and cat fact.
+            - `self.show_dog_image(image_url)`: Displays the downloaded dog image.
+            - `self.show_wisdom(wisdom_text)`: Displays the retrieved cat fact.
+        5. Implements error handling with a try-except block:
+            - Catches any exceptions (e.g., network issues, API errors).
+            - Logs the error message for debugging purposes.
+            - Updates the dog image and wisdom labels with informative error messages.
         """
         try:
             dog_response = requests.get("https://dog.ceo/api/breeds/image/random")
@@ -145,7 +160,21 @@ class DogImageApp(tk.Tk):
     def show_dog_image(self, image_url):
         """
         Downloads and displays the dog image at the given URL.
-        Resizes the image while maintaining its aspect ratio and handles potential download errors during image processing.
+
+        This method performs the following steps:
+
+        1. Downloads the dog image from the provided URL using `requests.get(image_url, stream=True)`.
+        2. Checks the HTTP status code of the response:
+            - If successful (status code 200):
+                - Opens the downloaded image data using `Image.open(image_response.raw)`.
+                - Stores the processed image in the `self.current_image` attribute for potential future use.
+                - Calculates the new dimensions to maintain the image's aspect ratio while fitting within the label frame.
+                - Resizes the image using `image.resize((new_width, new_height))`.
+                - Converts the PIL image to a format compatible with the CTkImage widget.
+                - Updates the `dog_image_label` with the resized and converted image.
+            - If download fails (non-200 status code):
+                - Logs the error message for debugging purposes.
+                - Updates the `dog_image_label` with an informative error message.
 
         Args:
             image_url (str): The URL of the dog image to download.
@@ -183,11 +212,23 @@ class DogImageApp(tk.Tk):
 
     def show_wisdom(self, wisdom_text):
         """
-        Fetches a random cat fact from the "https://catfact.ninja/fact" API,
-        formats the text for better display in the `wisdom_label`, and updates the label.
+        Formats and displays the provided cat fact text in the `wisdom_label`.
+
+        This method performs the following steps:
+
+        1. Assumes `wisdom_text` already contains the retrieved cat fact.
+        2. Initializes an empty list `lines` to store formatted text with line breaks.
+        3. Defines `max_length` to control the maximum characters per line for better readability.
+        4. Iterates through each word in the `wisdom_text`:
+            - If `lines` is not empty (meaning there's existing formatted text):
+                - Checks if adding the current word to the last line would exceed `max_length`.
+                    - If exceeded, starts a new line by appending an empty string to `lines`.
+            - Appends the current word with a space to the last line in `lines`.
+        5. Joins the formatted lines with newline characters (`\n`) for proper multi-line display.
+        6. Updates the `wisdom_label` with the formatted text.
 
         Args:
-            wisdom_text (str): The raw cat fact retrieved from the API.
+            wisdom_text (str): The raw cat fact text to be formatted and displayed.
         """
 
         # No need to repeat the API call here, 
@@ -213,9 +254,21 @@ class DogImageApp(tk.Tk):
 
     def save_image(self):
         """
-        Saves the currently displayed dog image to the disk.
+        Saves the currently displayed dog image to the user's chosen location.
 
-        If no image is currently loaded, a warning message is displayed.
+        This method performs the following steps:
+
+        1. Checks if there's an image loaded (`self.current_image` is not None).
+            - If no image is loaded, displays a warning message using `CTkMessagebox`.
+            - If an image is loaded, proceeds with saving.
+        2. Prompts the user to choose a file path and filename using `tk.filedialog.asksaveasfilename`.
+            - Sets the default extension to ".png" and filters for PNG images.
+        3. If the user selects a file path:
+            - Attempts to save the loaded image (`self.current_image`) using the PIL library's `save` method.
+                - On successful save, displays a success message using `CTkMessagebox`.
+            - Catches potential exceptions during saving:
+                - Logs the error message for debugging purposes (using `str(e)`).
+                - Displays an error message to the user using `CTkMessagebox`.
         """
 
         if not self.current_image:
@@ -234,7 +287,18 @@ class DogImageApp(tk.Tk):
                 CTkMessagebox(title="Error", message=f"An error occurred while saving the image: {str(e)}")
 
     def copy_wisdom_to_clipboard(self):
-        """Copies the current wisdom text to the clipboard."""
+        """
+        Copies the currently displayed wisdom text to the system clipboard.
+
+        This method performs the following steps:
+
+        1. Retrieves the text content from the `wisdom_label` using `cget("text")`.
+        2. Checks if there's any text to copy:
+            - If the `wisdom_text` is empty, displays a warning message using `CTkMessagebox`.
+        3. If there's text to copy:
+            - Copies the `wisdom_text` to the system clipboard using the `pyperclip.copy` function.
+            - Displays a success message to inform the user using `CTkMessagebox`.
+        """
         wisdom_text = self.wisdom_label.cget("text")
 
         if wisdom_text == "":
@@ -246,10 +310,26 @@ class DogImageApp(tk.Tk):
 
     def save_wisdom(self):
         """
-        Saves the current wisdom text to a text file.
+        Saves the currently displayed wisdom text to a text file.
 
-        If no wisdom text is available, displays a warning message.
+        This method performs the following steps:
+
+        1. Retrieves the text content from the `wisdom_label` using `cget("text")`.
+        2. Checks if there's any text to save:
+            - If the `wisdom_text` is empty, displays a warning message using `CTkMessagebox`.
+        3. If there's text to save:
+            - Prompts the user to choose a file path and filename using `tk.filedialog.asksaveasfilename`.
+                - Sets the default extension to ".txt" and filters for text files.
+        4. If the user selects a file path:
+            - Opens the file in write mode (`"w"`) for writing.
+            - Writes the `wisdom_text` to the file.
+            - Closes the file.
+            - Displays a success message to inform the user using `CTkMessagebox`.
+        5. Catches potential exceptions during file operations:
+            - Logs the error message for debugging purposes (using `str(e)`).
+            - Displays an error message to the user using `CTkMessagebox`.
         """
+
         wisdom_text = self.wisdom_label.cget("text")
 
         if wisdom_text == "":
