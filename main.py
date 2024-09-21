@@ -8,6 +8,7 @@ import requests
 from PIL import Image, ImageTk
 import os  # Import the 'os' module for file path manipulation
 import pyperclip
+from idlelib.tooltip import Hovertip
 
 
 class DogImageApp(tk.Tk):
@@ -93,6 +94,17 @@ class DogImageApp(tk.Tk):
         self.button_frame.pack(side=tk.TOP, padx=10, pady=10)
         self.image_frame.pack(side=tk.TOP, padx=10, pady=10)
         self.wisdom_frame.pack(side=tk.TOP, padx=10, pady=10)
+
+        # Tooltips
+        self.button_tooltip = "Unleash the secrets of the feline mind...\nthrough a dog image and a cat fact!\nGenerate a new dog image and cat fact."
+        self.save_button_tooltip = "Because who doesn't need more adorable doggo in their life?\nSave the current image to a file."
+        self.save_wisdom_button_tooltip = "Don't let these wise words go to the dogs!\nSave the cat fact to a text file."
+
+        # Set tooltips
+        Hovertip(self.button, self.button_tooltip)
+        Hovertip(self.save_button, self.save_button_tooltip)
+        Hovertip(self.save_wisdom_button, self.save_wisdom_button_tooltip)
+
 
     def show_dog_and_wisdom(self):
         """
