@@ -13,9 +13,9 @@ from idlelib.tooltip import Hovertip
 
 class DogImageApp(tk.Tk):
     """
-    This class represents the main application window for the Dog Image app.
-    It creates the GUI elements, handles user interaction, and displays random dog
-    images and cat facts.
+    This class represents the main application window for the Dog Image App.
+    It handles the graphical user interface (GUI), user interaction,
+    and displays random dog images alongside corresponding cat facts.
     """
 
     def __init__(self):
@@ -24,15 +24,15 @@ class DogImageApp(tk.Tk):
 
         - Sets the window title to "Dog Diary".
         - Disables resizing behavior for a fixed window size.
-        - Sets the window size to 680x480 pixels.
-        - Creates a label to display the dog image.
-        - Creates a label to display the cat fact with automatic line wrapping.
-        - Creates a button labeled "What am I thinking about cats?" that triggers
-          the `show_dog_and_wisdom` method when clicked.
+        - Sets the window size to 600x600 pixels.
+        - Creates frames to organize the layout of UI elements.
+        - Creates buttons for user interaction with descriptive text.
+        - Creates labels to display dog images and cat facts.
+        - Assigns tooltips to buttons using the Hovertip class.
         """
         super().__init__()
 
-        self.current_image = None  # Define current_image as a class variable
+        self.current_image = None  # Stores the currently displayed image
 
         self.title("Dog Diary")
         self.resizable(False, False) 
@@ -42,6 +42,7 @@ class DogImageApp(tk.Tk):
         self.image_frame = tk.Frame(self)
         self.wisdom_frame = tk.Frame(self)
 
+        # "What am I thinking about cats?" button with tooltip
         self.button = customtkinter.CTkButton(master=self.button_frame,
                                 text="What am I thinking about cats?",
                                 command=self.show_dog_and_wisdom,
@@ -50,7 +51,15 @@ class DogImageApp(tk.Tk):
                                 fg_color="#2D1E2F",
                                 hover_color="#F15946")
         self.button.grid(row=1, column=1, columnspan=3, padx=2, pady=5)
+        
+        self.button_tooltip = (
+            "Unleash the secrets of the feline mind...\n"
+            "through a dog image and a cat fact!\n"
+            "Generate a new dog image and cat fact.")
+        Hovertip(self.button, self.button_tooltip)
+        
 
+        # Additional buttons with tooltips
         self.save_button = customtkinter.CTkButton(master=self.button_frame,
                                                    text="Save Image",
                                                    command=self.save_image,
@@ -59,6 +68,11 @@ class DogImageApp(tk.Tk):
                                                    fg_color="#2D1E2F",
                                                    hover_color="#F15946")
         self.save_button.grid(row=2, column=1, columnspan=1, padx=2, pady=5)
+
+        self.save_button_tooltip = (
+            "Because who doesn't need more adorable doggo in their life?\n"
+            "Save the current image to a file.")
+        Hovertip(self.save_button, self.save_button_tooltip)
 
         self.copy_button = customtkinter.CTkButton(
             master=self.button_frame,
@@ -71,6 +85,11 @@ class DogImageApp(tk.Tk):
         )
         self.copy_button.grid(row=2, column=2, columnspan=1, padx=2, pady=5)
 
+        self.copy_button_tooltip = (
+            "Don't let these wise words go to the dogs!\n"
+            "Save the cat fact to your clipboard.")
+        Hovertip(self.copy_button, self.copy_button_tooltip)
+
         self.save_wisdom_button = customtkinter.CTkButton(
             master=self.button_frame,
             text="Save Wisdom",
@@ -81,6 +100,11 @@ class DogImageApp(tk.Tk):
             hover_color="#F15946",
         )
         self.save_wisdom_button.grid(row=2, column=3, columnspan=1, padx=2, pady=5)
+
+        self.save_wisdom_button_tooltip = (
+            "Don't let these wise words go to the dogs!\n"
+            "Save the cat fact to a text file.")
+        Hovertip(self.save_wisdom_button, self.save_wisdom_button_tooltip)
 
         
         self.dog_image_label = customtkinter.CTkLabel(self.image_frame, text='')
@@ -94,16 +118,6 @@ class DogImageApp(tk.Tk):
         self.button_frame.pack(side=tk.TOP, padx=10, pady=10)
         self.image_frame.pack(side=tk.TOP, padx=10, pady=10)
         self.wisdom_frame.pack(side=tk.TOP, padx=10, pady=10)
-
-        # Tooltips
-        self.button_tooltip = "Unleash the secrets of the feline mind...\nthrough a dog image and a cat fact!\nGenerate a new dog image and cat fact."
-        self.save_button_tooltip = "Because who doesn't need more adorable doggo in their life?\nSave the current image to a file."
-        self.save_wisdom_button_tooltip = "Don't let these wise words go to the dogs!\nSave the cat fact to a text file."
-
-        # Set tooltips
-        Hovertip(self.button, self.button_tooltip)
-        Hovertip(self.save_button, self.save_button_tooltip)
-        Hovertip(self.save_wisdom_button, self.save_wisdom_button_tooltip)
 
 
     def show_dog_and_wisdom(self):
