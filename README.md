@@ -11,7 +11,10 @@ The "Dog Diary" application is a fun and simple app designed for dog and cat lov
 ## Functionality
 - Displays random dog images: Clicking the "What am I thinking about cats?" button will display a random image of a dog.
 
-  ![](https://github.com/hrosicka/DogDiary/blob/master/doc/DogDiary2.png)
+  ![](https://github.com/hrosicka/DogDiary/blob/master/doc/DogDiary.png)
 
-Displays cat facts: Along with the dog image, a fun fact about cats is presented.
+- Displays cat facts: Along with the dog image, a fun fact about cats is presented.
+
+  ![](https://github.com/hrosicka/DogDiary/blob/master/doc/DogDiary2.png)
+  
 Saves images: Users can save their favorite dog images to their local device.
