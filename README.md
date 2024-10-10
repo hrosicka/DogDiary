@@ -17,4 +17,6 @@ The "Dog Diary" application is a fun and simple app designed for dog and cat lov
 
   ![](https://github.com/hrosicka/DogDiary/blob/master/doc/DogDiary2.png)
   
-Saves images: Users can save their favorite dog images to their local device.
+- Saves images: Users can save their favorite dog images to their local device.
+
+  ![](https://github.com/hrosicka/DogDiary/blob/master/doc/SaveImage.png)
