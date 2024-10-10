@@ -20,3 +20,17 @@ The "Dog Diary" application is a fun and simple app designed for dog and cat lov
 - Saves images: Users can save their favorite dog images to their local device.
 
   ![](https://github.com/hrosicka/DogDiary/blob/master/doc/SaveImage.png)
+
+
+## Code Breakdown:
+
+1. Imports: Necessary libraries for GUI elements, network requests, image processing, and clipboard interaction are imported.
+2. DogImageApp Class:
+    -  init(): Initializes the application window with title, size, and disables resizing. Creates frames and buttons with descriptive text. Assigns tooltips to buttons using the Hovertip class.
+    -  show_dog_and_wisdom(): Fetches a random dog image URL and cat fact concurrently using requests. Handles potential errors gracefully and updates labels with informative messages.
+    -  show_dog_image(image_url): Downloads and displays the dog image at the given URL. Implements error handling for download failures.
+    -  show_wisdom(wisdom_text): Formats and displays the provided cat fact text in the wisdom label.
+    -  save_image(): Saves the currently displayed dog image to a user-chosen location. Handles potential saving errors.
+    -  copy_wisdom_to_clipboard(): Copies the displayed cat fact text to the system clipboard.
+    -  save_wisdom(): Saves the displayed cat fact to a user-chosen text file. Handles potential file operation errors.
+4. Main Loop: If the script is executed directly, it creates an instance of the DogImageApp class and starts the main application loop (mainloop).
