@@ -10,6 +10,14 @@ import os  # Import the 'os' module for file path manipulation
 import pyperclip
 from idlelib.tooltip import Hovertip
 
+# Define a dictionary to store background colors with descriptive names
+background_colors = {
+    "Light Gray": "#F2F2F2",
+    "Light Ivory": "#FFFAFA",
+    "Sky Blue": "#F0FFFF",
+    "Peach": "#FFE4B5"
+}
+
 
 class DogImageApp(tk.Tk):
     """
@@ -106,6 +114,14 @@ class DogImageApp(tk.Tk):
             "Save the cat fact to a text file.")
         Hovertip(self.save_wisdom_button, self.save_wisdom_button_tooltip)
 
+        # Create a dropdown menu for background colors
+        self.color_menu = customtkinter.CTkComboBox(
+            master=self.button_frame,
+            values=list(background_colors.keys()),
+            command=lambda color: self.change_background_color(background_colors.get(self.color_menu.get())),
+        );
+        self.color_menu.grid(row=3, column=1, columnspan=3, padx=2, pady=5)
+
         
         self.dog_image_label = customtkinter.CTkLabel(self.image_frame, text='')
         self.dog_image_label.grid(row=1, column=1, columnspan=3, padx=30, pady=10)
@@ -119,6 +135,13 @@ class DogImageApp(tk.Tk):
         self.image_frame.pack(side=tk.TOP, padx=10, pady=10)
         self.wisdom_frame.pack(side=tk.TOP, padx=10, pady=10)
 
+    def change_background_color(self, color):
+        """Changes the background color of the application window."""
+        self.configure(bg=color)
+        self.wisdom_label.configure(bg_color=color)
+        self.button_frame.configure(bg=color)
+        self.image_frame.configure(bg=color)
+        self.wisdom_frame.configure(bg=color)
 
     def show_dog_and_wisdom(self):
         """
