@@ -44,7 +44,7 @@ class DogImageApp(tk.Tk):
 
         self.title("Dog Diary")
         self.resizable(False, False) 
-        self.geometry("600x600")
+        self.geometry("600x700")
 
         self.button_frame = tk.Frame(self)
         self.image_frame = tk.Frame(self)
@@ -65,6 +65,16 @@ class DogImageApp(tk.Tk):
             "through a dog image and a cat fact!\n"
             "Generate a new dog image and cat fact.")
         Hovertip(self.button, self.button_tooltip)
+
+         # Additional buttons with tooltips
+        self.new_idea_button = customtkinter.CTkButton(master=self.button_frame,
+                                                   text="New idea about cats",
+                                                   command=self.show_new_idea,
+                                                   width=150,
+                                                   text_color="white",
+                                                   fg_color="#2D1E2F",
+                                                   hover_color="#F15946")
+        self.new_idea_button.grid(row=2, column=1, columnspan=1, padx=2, pady=5)
         
 
         # Additional buttons with tooltips
@@ -75,7 +85,7 @@ class DogImageApp(tk.Tk):
                                                    text_color="white",
                                                    fg_color="#2D1E2F",
                                                    hover_color="#F15946")
-        self.save_button.grid(row=2, column=1, columnspan=1, padx=2, pady=5)
+        self.save_button.grid(row=3, column=1, columnspan=1, padx=2, pady=5)
 
         self.save_button_tooltip = (
             "Because who doesn't need more adorable doggo in their life?\n"
@@ -91,7 +101,7 @@ class DogImageApp(tk.Tk):
             fg_color="#2D1E2F",
             hover_color="#F15946",
         )
-        self.copy_button.grid(row=2, column=2, columnspan=1, padx=2, pady=5)
+        self.copy_button.grid(row=3, column=2, columnspan=1, padx=2, pady=5)
 
         self.copy_button_tooltip = (
             "Don't let these wise words go to the dogs!\n"
@@ -107,7 +117,7 @@ class DogImageApp(tk.Tk):
             fg_color="#2D1E2F",
             hover_color="#F15946",
         )
-        self.save_wisdom_button.grid(row=2, column=3, columnspan=1, padx=2, pady=5)
+        self.save_wisdom_button.grid(row=3, column=3, columnspan=1, padx=2, pady=5)
 
         self.save_wisdom_button_tooltip = (
             "Don't let these wise words go to the dogs!\n"
@@ -119,7 +129,7 @@ class DogImageApp(tk.Tk):
                                                    text="Background Color",
                                                    width=150,
                                                    text_color="#2D1E2F")
-        self.color_label.grid(row=3, column=1, columnspan=1, padx=2, pady=5)
+        self.color_label.grid(row=4, column=1, columnspan=1, padx=2, pady=5)
 
         # Create a dropdown menu for background colors
         self.color_menu = customtkinter.CTkComboBox(
@@ -133,7 +143,7 @@ class DogImageApp(tk.Tk):
             dropdown_fg_color="#2D1E2F",
             dropdown_text_color="white",
         );
-        self.color_menu.grid(row=3, column=2, columnspan=1, padx=2, pady=5)
+        self.color_menu.grid(row=4, column=2, columnspan=1, padx=2, pady=5)
 
         
         self.dog_image_label = customtkinter.CTkLabel(self.image_frame, text='')
@@ -155,6 +165,24 @@ class DogImageApp(tk.Tk):
         self.button_frame.configure(bg=color)
         self.image_frame.configure(bg=color)
         self.wisdom_frame.configure(bg=color)
+
+    def show_new_idea(self):
+
+        if not self.current_image:
+            CTkMessagebox(title="Error", message="Thinking about cats again? Perhaps a new doggo will inspire you! Press the button 'What am I thinking about cats?' first")
+            return
+        
+        try:
+            cat_response = requests.get("https://catfact.ninja/fact")
+            cat_data = cat_response.json()
+            wisdom_text = cat_data["fact"]
+
+            self.show_wisdom(wisdom_text)
+
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            self.wisdom_label.configure(text="Failed to retrieve cat fact")
+
 
     def show_dog_and_wisdom(self):
         """
