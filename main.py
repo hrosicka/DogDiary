@@ -114,13 +114,26 @@ class DogImageApp(tk.Tk):
             "Save the cat fact to a text file.")
         Hovertip(self.save_wisdom_button, self.save_wisdom_button_tooltip)
 
+
+        self.color_label = customtkinter.CTkLabel(master=self.button_frame,
+                                                   text="Background Color",
+                                                   width=150,
+                                                   text_color="#2D1E2F")
+        self.color_label.grid(row=3, column=1, columnspan=1, padx=2, pady=5)
+
         # Create a dropdown menu for background colors
         self.color_menu = customtkinter.CTkComboBox(
             master=self.button_frame,
             values=list(background_colors.keys()),
             command=lambda color: self.change_background_color(background_colors.get(self.color_menu.get())),
+            text_color="white",
+            fg_color="#2D1E2F",
+            dropdown_hover_color="#F15946",
+            button_hover_color="#F15946",
+            dropdown_fg_color="#2D1E2F",
+            dropdown_text_color="white",
         );
-        self.color_menu.grid(row=3, column=1, columnspan=3, padx=2, pady=5)
+        self.color_menu.grid(row=3, column=2, columnspan=1, padx=2, pady=5)
 
         
         self.dog_image_label = customtkinter.CTkLabel(self.image_frame, text='')
