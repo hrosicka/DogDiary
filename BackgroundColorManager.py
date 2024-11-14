@@ -33,7 +33,7 @@ class BackgroundColorManager:
             self.current_color = color
             self.change_widget_colors(self.available_colors[color])
         else:
-            print(f"Neplatná barva: {color}")
+            print(f"Invalid Color: {color}")
 
     def change_widget_colors(self, color):
         """
