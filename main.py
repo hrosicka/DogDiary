@@ -8,8 +8,15 @@ import requests
 from PIL import Image, ImageTk
 import os  # Import the 'os' module for file path manipulation
 import pyperclip
+import clipboard
+import io
+import base64
+import win32clipboard
+import win32con
 from idlelib.tooltip import Hovertip
 from BackgroundColorManager import BackgroundColorManager
+from tkinter.messagebox import showinfo, showerror
+from io import BytesIO
 
 class DogImageApp(tk.Tk):
     """
@@ -59,7 +66,7 @@ class DogImageApp(tk.Tk):
             "Generate a new dog image and cat fact.")
         Hovertip(self.button, self.button_tooltip)
 
-         # Additional buttons with tooltips
+        # Additional buttons with tooltips
         self.new_idea_button = customtkinter.CTkButton(master=self.button_frame,
                                                    text="New idea about cats",
                                                    command=self.show_new_idea,
@@ -68,6 +75,16 @@ class DogImageApp(tk.Tk):
                                                    fg_color="#2D1E2F",
                                                    hover_color="#F15946")
         self.new_idea_button.grid(row=2, column=1, columnspan=1, padx=2, pady=5)
+
+        # Additional buttons with tooltips
+        self.copy_image_button = customtkinter.CTkButton(master=self.button_frame,
+                                                   text="Copy Image",
+                                                   command=self.copy_image_to_clipboard,
+                                                   width=150,
+                                                   text_color="white",
+                                                   fg_color="#2D1E2F",
+                                                   hover_color="#F15946")
+        self.copy_image_button.grid(row=2, column=2, columnspan=1, padx=2, pady=5)
         
 
         # Additional buttons with tooltips
@@ -356,6 +373,33 @@ class DogImageApp(tk.Tk):
         
         pyperclip.copy(wisdom_text)
         CTkMessagebox(title="Success", message="Text has been copied to the clipboard.")
+
+    def copy_image_to_clipboard(self):
+        """Copies the current image to the clipboard in JPG format using win32clipboard.
+
+        Args:
+            self: An instance of the class containing the attribute self.current_image with the image.
+        """
+
+        if not self.current_image:
+            CTkMessagebox(title="Error", message="No image to copy.")
+            return
+
+        # Uložení obrázku do paměti jako JPG
+        with io.BytesIO() as output:
+            self.current_image.save(output, format="BMP")
+            data = output.getvalue()
+
+        output = BytesIO()
+        self.current_image.convert('RGB').save(output, 'BMP')
+        data = output.getvalue()[14:]
+        output.close()
+
+        win32clipboard.OpenClipboard()
+        win32clipboard.EmptyClipboard()
+        win32clipboard.SetClipboardData(win32clipboard.CF_DIB, data)
+        win32clipboard.CloseClipboard()
+
 
     def save_wisdom(self):
         """
