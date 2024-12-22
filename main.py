@@ -68,7 +68,7 @@ class DogImageApp(tk.Tk):
 
         # Additional buttons with tooltips
         self.new_idea_button = customtkinter.CTkButton(master=self.button_frame,
-                                                   text="New idea about cats",
+                                                   text="I'll Think Again",
                                                    command=self.show_new_idea,
                                                    width=150,
                                                    text_color="white",
@@ -86,6 +86,15 @@ class DogImageApp(tk.Tk):
                                                    hover_color="#F15946")
         self.copy_image_button.grid(row=2, column=2, columnspan=1, padx=2, pady=5)
         
+
+        self.new_doggo_button = customtkinter.CTkButton(master=self.button_frame,
+                                       text="Not My Idea",
+                                       command=self.show_new_doggo,
+                                       width=150,
+                                       text_color="white",
+                                       fg_color="#2D1E2F",
+                                       hover_color="#F15946")
+        self.new_doggo_button.grid(row=2, column=3, columnspan=1, padx=2, pady=5)
 
         # Additional buttons with tooltips
         self.save_button = customtkinter.CTkButton(master=self.button_frame,
@@ -152,7 +161,7 @@ class DogImageApp(tk.Tk):
             button_hover_color="#F15946",
             dropdown_fg_color="#2D1E2F",
             dropdown_text_color="white",
-        );
+        )
         self.color_menu.grid(row=4, column=2, columnspan=1, padx=2, pady=5)
 
         
@@ -184,6 +193,32 @@ class DogImageApp(tk.Tk):
         except Exception as e:
             print(f"An error occurred: {e}")
             self.wisdom_label.configure(text="Failed to retrieve cat fact")
+
+
+    def show_new_doggo(self):
+        """
+        Fetches a new random dog image and updates the display.
+
+        This method:
+        1. Fetches a new dog image URL from the dog.ceo API.
+        2. Updates the displayed image by calling self.show_dog_image() 
+        with the new URL.
+        """
+        wisdom_text = self.wisdom_label.cget("text")
+
+        if wisdom_text == "":
+            CTkMessagebox(title="Error", message="Press the button 'What am I thinking about cats?' first!")
+            return
+        
+        try:
+            dog_response = requests.get("https://dog.ceo/api/breeds/image/random")
+            dog_data = dog_response.json()
+            image_url = dog_data["message"]
+            self.show_dog_image(image_url)
+        except Exception as e:
+            print(f"Error fetching new dog image: {e}")
+            self.dog_image_label.configure(text="Error fetching new dog image")
+
 
 
     def show_dog_and_wisdom(self):
