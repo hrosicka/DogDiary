@@ -46,6 +46,11 @@ class DogImageApp(tk.Tk):
         self.resizable(False, False) 
         self.geometry("600x700")
 
+        dirname = os.path.dirname(__file__)
+        #self.icon_path = os.path.join(dirname, 'IconUser.ico')  # Replace with your icon file path
+        #self.iconbitmap(self.icon_path)  # Set the window icon
+        self.warning_ico_path = os.path.join(dirname, 'warning.png') 
+
         self.button_frame = tk.Frame(self)
         self.image_frame = tk.Frame(self)
         self.wisdom_frame = tk.Frame(self)
@@ -180,7 +185,16 @@ class DogImageApp(tk.Tk):
     def show_new_idea(self):
 
         if not self.current_image:
-            CTkMessagebox(title="Error", message="Thinking about cats again? Perhaps a new doggo will inspire you! Press the button 'What am I thinking about cats?' first")
+            CTkMessagebox(title="Error",
+                          message="Thinking about cats again? Perhaps a new doggo will inspire you! Press the button 'What am I thinking about cats?' first!",
+                          icon=self.warning_ico_path,
+                          icon_size=(100,100),
+                          fg_color="#F2F2F2",
+                          bg_color="light grey",
+                          button_text_color="white",
+                          button_width=80,
+                          button_color="#2D1E2F",
+                          button_hover_color="#F15946")
             return
         
         try:
@@ -207,7 +221,16 @@ class DogImageApp(tk.Tk):
         wisdom_text = self.wisdom_label.cget("text")
 
         if wisdom_text == "":
-            CTkMessagebox(title="Error", message="Press the button 'What am I thinking about cats?' first!")
+            CTkMessagebox(title="Error",
+                          message="Press the button 'What am I thinking about cats?' first!",
+                          icon=self.warning_ico_path,
+                          icon_size=(100,100),
+                          fg_color="#F2F2F2",
+                          bg_color="light grey",
+                          button_text_color="white",
+                          button_width=80,
+                          button_color="#2D1E2F",
+                          button_hover_color="#F15946")
             return
         
         try:
@@ -373,7 +396,16 @@ class DogImageApp(tk.Tk):
         """
 
         if not self.current_image:
-            CTkMessagebox(title="Error", message="No image to save.")
+            CTkMessagebox(title="Error",
+                          message="No image to save.",
+                          icon=self.warning_ico_path,
+                          icon_size=(100,100),
+                          fg_color="#F2F2F2",
+                          bg_color="light grey",
+                          button_text_color="white",
+                          button_width=80,
+                          button_color="#2D1E2F",
+                          button_hover_color="#F15946")
             return
 
         # Get the file path where the image will be saved (using a file dialog)
@@ -403,7 +435,16 @@ class DogImageApp(tk.Tk):
         wisdom_text = self.wisdom_label.cget("text")
 
         if wisdom_text == "":
-            CTkMessagebox(title="Error", message="No wisdom text to copy.")
+            CTkMessagebox(title="Error",
+                          message="No wisdom text to copy.",
+                          icon=self.warning_ico_path,
+                          icon_size=(100,100),
+                          fg_color="#F2F2F2",
+                          bg_color="light grey",
+                          button_text_color="white",
+                          button_width=80,
+                          button_color="#2D1E2F",
+                          button_hover_color="#F15946")
             return
         
         pyperclip.copy(wisdom_text)
@@ -417,7 +458,16 @@ class DogImageApp(tk.Tk):
         """
 
         if not self.current_image:
-            CTkMessagebox(title="Error", message="No image to copy.")
+            CTkMessagebox(title="Error",
+                          message="No image to copy.",
+                          icon=self.warning_ico_path,
+                          icon_size=(100,100),
+                          fg_color="#F2F2F2",
+                          bg_color="light grey",
+                          button_text_color="white",
+                          button_width=80,
+                          button_color="#2D1E2F",
+                          button_hover_color="#F15946")
             return
 
         # Uložení obrázku do paměti jako JPG
@@ -461,7 +511,16 @@ class DogImageApp(tk.Tk):
         wisdom_text = self.wisdom_label.cget("text")
 
         if wisdom_text == "":
-            CTkMessagebox(title="Error", message="No wisdom text to save.")
+            CTkMessagebox(title="Error",
+                          message="No wisdom text to save.",
+                          icon=self.warning_ico_path,
+                          icon_size=(100,100),
+                          fg_color="#F2F2F2",
+                          bg_color="light grey",
+                          button_text_color="white",
+                          button_width=80,
+                          button_color="#2D1E2F",
+                          button_hover_color="#F15946")
             return
 
         # Get the file path where the text will be saved (using a file dialog)
@@ -477,7 +536,16 @@ class DogImageApp(tk.Tk):
 
                 CTkMessagebox(title="Success", message="Wisdom saved successfully.")
             except Exception as e:
-                CTkMessagebox(title="Error", message=f"An error occurred while saving: {str(e)}")
+                CTkMessagebox(title="Error",
+                              message=f"An error occurred while saving: {str(e)}",
+                              icon=self.warning_ico_path,
+                              icon_size=(100,100),
+                              fg_color="#F2F2F2",
+                              bg_color="light grey",
+                              button_text_color="white",
+                              button_width=80,
+                              button_color="#2D1E2F",
+                              button_hover_color="#F15946")
 
        
 
