@@ -8,11 +8,8 @@ import requests
 from PIL import Image, ImageTk
 import os  # Import the 'os' module for file path manipulation
 import pyperclip
-import clipboard
 import io
-import base64
 import win32clipboard
-import win32con
 from idlelib.tooltip import Hovertip
 from BackgroundColorManager import BackgroundColorManager
 from tkinter.messagebox import showinfo, showerror
@@ -81,6 +78,14 @@ class DogImageApp(tk.Tk):
                                                    hover_color="#F15946")
         self.new_idea_button.grid(row=2, column=1, columnspan=1, padx=2, pady=5)
 
+        self.new_idea_button_tooltip = (
+            "Time for a fresh feline thought.\n"
+            "Displays a new cat fact for the existing dog image.\n"
+            "Only updates the cat wisdom; the dog image remains the same."
+        )
+        Hovertip(self.new_idea_button, self.new_idea_button_tooltip)
+
+
         # Additional buttons with tooltips
         self.copy_image_button = customtkinter.CTkButton(master=self.button_frame,
                                                    text="Copy Image",
@@ -90,16 +95,10 @@ class DogImageApp(tk.Tk):
                                                    fg_color="#2D1E2F",
                                                    hover_color="#F15946")
         self.copy_image_button.grid(row=2, column=2, columnspan=1, padx=2, pady=5)
-        
 
-        self.new_doggo_button = customtkinter.CTkButton(master=self.button_frame,
-                                       text="Not My Idea",
-                                       command=self.show_new_doggo,
-                                       width=150,
-                                       text_color="white",
-                                       fg_color="#2D1E2F",
-                                       hover_color="#F15946")
-        self.new_doggo_button.grid(row=2, column=3, columnspan=1, padx=2, pady=5)
+        self.copy_image_button_tooltip = "Because sharing is caring!\nCopy the current doggo to your clipboard."
+        Hovertip(self.copy_image_button, self.copy_image_button_tooltip)
+
 
         # Additional buttons with tooltips
         self.save_button = customtkinter.CTkButton(master=self.button_frame,
@@ -109,13 +108,31 @@ class DogImageApp(tk.Tk):
                                                    text_color="white",
                                                    fg_color="#2D1E2F",
                                                    hover_color="#F15946")
-        self.save_button.grid(row=3, column=1, columnspan=1, padx=2, pady=5)
+        self.save_button.grid(row=2, column=3, columnspan=1, padx=2, pady=5)
 
         self.save_button_tooltip = (
             "Because who doesn't need more adorable doggo in their life?\n"
             "Save the current image to a file.")
         Hovertip(self.save_button, self.save_button_tooltip)
 
+
+        self.new_doggo_button = customtkinter.CTkButton(master=self.button_frame,
+                                       text="Not My Idea",
+                                       command=self.show_new_doggo,
+                                       width=150,
+                                       text_color="white",
+                                       fg_color="#2D1E2F",
+                                       hover_color="#F15946")
+        self.new_doggo_button.grid(row=3, column=1, columnspan=1, padx=2, pady=5)
+
+        self.new_doggo_button_tooltip = (
+        "I am not feeling the cat vibes. How about a different dog?\n"
+        "Displays a new dog image.\n"
+        "Only the dog image is updated; the cat wisdom remains the same."
+        )
+        Hovertip(self.new_doggo_button, self.new_doggo_button_tooltip)
+
+    
         self.copy_button = customtkinter.CTkButton(
             master=self.button_frame,
             text="Copy Wisdom",
@@ -129,8 +146,9 @@ class DogImageApp(tk.Tk):
 
         self.copy_button_tooltip = (
             "Don't let these wise words go to the dogs!\n"
-            "Save the cat fact to your clipboard.")
+            "Copy the cat fact to your clipboard.")
         Hovertip(self.copy_button, self.copy_button_tooltip)
+
 
         self.save_wisdom_button = customtkinter.CTkButton(
             master=self.button_frame,
