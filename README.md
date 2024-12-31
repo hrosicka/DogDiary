@@ -1,12 +1,17 @@
 # Dog Diary
-Woof! This app is a paw-some way to see adorable doggos and discover fun facts about their feline friends.
+Woof! This app 🐶🐾🐶 is a paw-some way to see adorable doggos and discover fun facts about their feline friends.
 Based on Cat Facts API: https://catfact.ninja/fact and on Dog API: https://dog.ceo/api/breeds/image/random
 
 ## Introduction
-The "Dog Diary" application is a fun and simple app designed for dog and cat lovers. It combines adorable dog images with interesting cat facts. The app utilizes two publicly available APIs:
+The "Dog Diary"  application is a fun and simple app designed for dog and cat lovers 💕💘. It combines adorable dog images with interesting cat facts. The app utilizes two publicly available APIs:
 
 - dog.ceo: This API provides random images of various dog breeds.
 - catfact.ninja: This API offers a database of interesting and lesser-known facts about cats.
+
+## Who is this for?
+- Animal lovers: If you can't get enough of dogs and cats, this app is for you.
+- Mood boosters: Need a quick pick-me-up? Our app is guaranteed to put a smile on your face.
+- Anyone who loves fun: If you're looking for a fun and easy way to pass the time, look no further!
 
 ## Functionality
 - Displays random dog images: Clicking the "What am I thinking about cats?" button will display a random image of a dog.
@@ -20,6 +25,15 @@ The "Dog Diary" application is a fun and simple app designed for dog and cat lov
 - Saves images: Users can save their favorite dog images to their local device.
 
   ![](https://github.com/hrosicka/DogDiary/blob/master/doc/SaveImage.png)
+
+
+## Handling Empty Content for Buttons
+
+The application handles situations where the user clicks buttons for working with images or text before any content (dog image or cat fact) has been loaded. In these cases, an information message box is displayed with a warning. Specifically:
+
+- **"I'll Think Again"** - If the user clicks this button before the first cat fact is displayed (i.e., when wisdom_label is empty), a message box appears saying, "Thinking about cats again? Perhaps a new doggo will inspire you! Press the button 'What am I thinking about cats?' first!"
+  
+- **"Not My Idea" Button** - If the user clicks this button before the first cat fact is displayed (i.e., when wisdom_label is empty), a message box appears saying, "Press the button 'What am I thinking about cats?' first!"
 
 
 ## Code Breakdown:
