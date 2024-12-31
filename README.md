@@ -34,6 +34,8 @@ The "Dog Diary"  application is a fun and simple app designed for dog and cat lo
 - Click on the dropdown menu to reveal the list of available colors.
 - Select your desired color from the list. The application's background will immediately update to reflect your choice.
 
+   ![](https://github.com/hrosicka/DogDiary/blob/master/doc/ChangeBackgroundColor.png)
+
 
 ## Handling Empty Content for Buttons
 
