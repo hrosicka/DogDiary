@@ -27,13 +27,25 @@ The "Dog Diary"  application is a fun and simple app designed for dog and cat lo
   ![](https://github.com/hrosicka/DogDiary/blob/master/doc/SaveImage.png)
 
 
+
+## How to Change the Background Color
+
+- Locate the "Background Color" label and the adjacent dropdown menu in the button section of the application.
+- Click on the dropdown menu to reveal the list of available colors.
+- Select your desired color from the list. The application's background will immediately update to reflect your choice.
+
+
 ## Handling Empty Content for Buttons
 
 The application handles situations where the user clicks buttons for working with images or text before any content (dog image or cat fact) has been loaded. In these cases, an information message box is displayed with a warning. Specifically:
 
 - **"I'll Think Again"** - If the user clicks this button before the first cat fact is displayed (i.e., when wisdom_label is empty), a message box appears saying, "Thinking about cats again? Perhaps a new doggo will inspire you! Press the button 'What am I thinking about cats?' first!"
+
+  ![](https://github.com/hrosicka/DogDiary/blob/master/doc/ThinkAgainMessageBox.png)
   
 - **"Not My Idea" Button** - If the user clicks this button before the first cat fact is displayed (i.e., when wisdom_label is empty), a message box appears saying, "Press the button 'What am I thinking about cats?' first!"
+
+  ![](https://github.com/hrosicka/DogDiary/blob/master/doc/NotMyIdeaMessageBox.png)
 
 
 ## Code Breakdown:
