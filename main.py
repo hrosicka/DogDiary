@@ -5,14 +5,13 @@ import tkinter as tk
 import customtkinter
 from CTkMessagebox import CTkMessagebox
 import requests
-from PIL import Image, ImageTk
+from PIL import Image
 import os  # Import the 'os' module for file path manipulation
 import pyperclip
 import io
 import win32clipboard
 from idlelib.tooltip import Hovertip
 from BackgroundColorManager import BackgroundColorManager
-from tkinter.messagebox import showinfo, showerror
 from io import BytesIO
 
 class DogImageApp(tk.Tk):
@@ -376,22 +375,18 @@ class DogImageApp(tk.Tk):
         # No need to repeat the API call here, 
         # assume `wisdom_text` already contains the fact.
 
-        lines = []  # List to store formatted lines with line breaks
-        max_length = 68  # Maximum characters per line for better display
+        lines = []
+        max_length = 68
 
         for word in wisdom_text.split():
-            # If lines is not empty (there's existing formatted text)
             if lines:
-                # Check if the current line + new word exceeds max_length
                 if len(" ".join(lines[-1:])) + len(word) > max_length:
-                    lines.append("")  # Start a new line
+                    lines.append("")
             else:
-                lines.append("")  # Initiate the first line
+                lines.append("")
 
-            # Append current word with a space to the last line in 'lines'
-            lines[-1] += " " + word
+            lines[-1] = f"{lines[-1]} {word}"  # Using f-string here!
 
-        # Join formatted lines with newline characters and update the label
         self.wisdom_label.configure(text="\n".join(lines))
 
     def save_image(self):
@@ -433,9 +428,45 @@ class DogImageApp(tk.Tk):
             try:
                 # Save the image using the PIL library
                 self.current_image.save(file_path)
-                CTkMessagebox(title="Success", message="Image saved successfully.")
-            except Exception as e:
-                CTkMessagebox(title="Error", message=f"An error occurred while saving the image: {str(e)}")
+                CTkMessagebox(title="Success", 
+                              message="Image saved successfully.",
+                              fg_color="#F2F2F2",
+                              bg_color="light grey",
+                              button_text_color="white",
+                              button_width=80,
+                              button_color="#2D1E2F",
+                              button_hover_color="#F15946")  
+                
+            except FileNotFoundError:
+                CTkMessagebox(title="Error", 
+                              message="Invalid file path. Please choose a valid location.",
+                              fg_color="#F2F2F2",
+                              bg_color="light grey",
+                              button_text_color="white",
+                              button_width=80,
+                              button_color="#2D1E2F",
+                              button_hover_color="#F15946")
+            
+            except OSError as e: # Catching OSError for other file system errors
+                CTkMessagebox(title="Error",
+                              message=f"A file system error occurred: {e}",
+                              fg_color="#F2F2F2",
+                              bg_color="light grey",
+                              button_text_color="white",
+                              button_width=80,
+                              button_color="#2D1E2F",
+                              button_hover_color="#F15946")
+            
+            except Exception as e: # Catching a general exception if other errors occur
+                CTkMessagebox(title="Error", 
+                              message=f"An unexpected error occurred while saving: {e}",
+                              fg_color="#F2F2F2",
+                              bg_color="light grey",
+                              button_text_color="white",
+                              button_width=80,
+                              button_color="#2D1E2F",
+                              button_hover_color="#F15946")
+
 
     def copy_wisdom_to_clipboard(self):
         """
@@ -466,7 +497,14 @@ class DogImageApp(tk.Tk):
             return
         
         pyperclip.copy(wisdom_text)
-        CTkMessagebox(title="Success", message="Text has been copied to the clipboard.")
+        CTkMessagebox(title="Success",
+                        message="Text has been copied to the clipboard.",
+                        fg_color="#F2F2F2",
+                        bg_color="light grey",
+                        button_text_color="white",
+                        button_width=80,
+                        button_color="#2D1E2F",
+                        button_hover_color="#F15946")
 
     def copy_image_to_clipboard(self):
         """Copies the current image to the clipboard in JPG format using win32clipboard.
@@ -502,6 +540,15 @@ class DogImageApp(tk.Tk):
         win32clipboard.EmptyClipboard()
         win32clipboard.SetClipboardData(win32clipboard.CF_DIB, data)
         win32clipboard.CloseClipboard()
+
+        CTkMessagebox(title="Success",
+                        message="Image has been copied to the clipboard.",
+                        fg_color="#F2F2F2",
+                        bg_color="light grey",
+                        button_text_color="white",
+                        button_width=80,
+                        button_color="#2D1E2F",
+                        button_hover_color="#F15946")
 
 
     def save_wisdom(self):
@@ -552,7 +599,15 @@ class DogImageApp(tk.Tk):
                 with open(file_path, "w") as f:
                     f.write(wisdom_text)
 
-                CTkMessagebox(title="Success", message="Wisdom saved successfully.")
+                CTkMessagebox(title="Success", 
+                              message="Wisdom saved successfully.",
+                              fg_color="#F2F2F2",
+                              bg_color="light grey",
+                              button_text_color="white",
+                              button_width=80,
+                              button_color="#2D1E2F",
+                              button_hover_color="#F15946")
+                
             except Exception as e:
                 CTkMessagebox(title="Error",
                               message=f"An error occurred while saving: {str(e)}",
@@ -565,7 +620,6 @@ class DogImageApp(tk.Tk):
                               button_color="#2D1E2F",
                               button_hover_color="#F15946")
 
-       
 
 # Run the main application loop if this script is executed directly
 if __name__ == "__main__":
