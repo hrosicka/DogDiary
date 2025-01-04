@@ -375,22 +375,18 @@ class DogImageApp(tk.Tk):
         # No need to repeat the API call here, 
         # assume `wisdom_text` already contains the fact.
 
-        lines = []  # List to store formatted lines with line breaks
-        max_length = 68  # Maximum characters per line for better display
+        lines = []
+        max_length = 68
 
         for word in wisdom_text.split():
-            # If lines is not empty (there's existing formatted text)
             if lines:
-                # Check if the current line + new word exceeds max_length
                 if len(" ".join(lines[-1:])) + len(word) > max_length:
-                    lines.append("")  # Start a new line
+                    lines.append("")
             else:
-                lines.append("")  # Initiate the first line
+                lines.append("")
 
-            # Append current word with a space to the last line in 'lines'
-            lines[-1] += " " + word
+            lines[-1] = f"{lines[-1]} {word}"  # Using f-string here!
 
-        # Join formatted lines with newline characters and update the label
         self.wisdom_label.configure(text="\n".join(lines))
 
     def save_image(self):
