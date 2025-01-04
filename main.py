@@ -435,17 +435,38 @@ class DogImageApp(tk.Tk):
                               button_text_color="white",
                               button_width=80,
                               button_color="#2D1E2F",
-                              button_hover_color="#F15946")
+                              button_hover_color="#F15946")  
                 
-            except Exception as e:
-                CTkMessagebox(title="Error",
-                              message=f"An error occurred while saving the image: {str(e)}",
+            except FileNotFoundError:
+                CTkMessagebox(title="Error", 
+                              message="Invalid file path. Please choose a valid location.",
                               fg_color="#F2F2F2",
                               bg_color="light grey",
                               button_text_color="white",
                               button_width=80,
                               button_color="#2D1E2F",
                               button_hover_color="#F15946")
+            
+            except OSError as e: # Catching OSError for other file system errors
+                CTkMessagebox(title="Error",
+                              message=f"A file system error occurred: {e}",
+                              fg_color="#F2F2F2",
+                              bg_color="light grey",
+                              button_text_color="white",
+                              button_width=80,
+                              button_color="#2D1E2F",
+                              button_hover_color="#F15946")
+            
+            except Exception as e: # Catching a general exception if other errors occur
+                CTkMessagebox(title="Error", 
+                              message=f"An unexpected error occurred while saving: {e}",
+                              fg_color="#F2F2F2",
+                              bg_color="light grey",
+                              button_text_color="white",
+                              button_width=80,
+                              button_color="#2D1E2F",
+                              button_hover_color="#F15946")
+
 
     def copy_wisdom_to_clipboard(self):
         """
