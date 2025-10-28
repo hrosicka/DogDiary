@@ -71,3 +71,9 @@ The application handles situations where the user clicks buttons for working wit
     -  copy_wisdom_to_clipboard(): Copies the displayed cat fact text to the system clipboard.
     -  save_wisdom(): Saves the displayed cat fact to a user-chosen text file. Handles potential file operation errors.
 4. Main Loop: If the script is executed directly, it creates an instance of the DogImageApp class and starts the main application loop (mainloop).
+
+## Author
+Lovingly crafted by [Hanka Robovska](https://github.com/hrosicka)
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details. Free to use, modify, and distribute as needed.
