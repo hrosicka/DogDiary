@@ -1,5 +1,5 @@
 customtkinter==5.2.0
-CTkMessagebox==2.1.1
+CTkMessagebox==2.7
 requests==2.31.0
 pillow==10.1.0
 pyperclip==1.8.2
