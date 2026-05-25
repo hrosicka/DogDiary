@@ -1,24 +1,11 @@
 # ==========================================
-# Python - cache soubory a kompilovaný kód
+# Python - cache files and compiled code
 # ==========================================
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
-
-# ==========================================
-# Virtuální prostředí (Zásadní věc!)
-# ==========================================
-venv/
-env/
-ENV/
-.env
-.venv
-
-# ==========================================
-# Distribuce, balíčkování a buildy
-# ==========================================
 build/
 develop-eggs/
 dist/
@@ -38,16 +25,52 @@ share/python-wheels/
 MANIFEST
 
 # ==========================================
-# Testování a pokrytí kódu (Pytest, Coverage)
+# Virtual environments
+# ==========================================
+venv/
+env/
+ENV/
+.env
+.venv
+.env.local
+.env.*.local
+
+# ==========================================
+# IDEs and OS metadata
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ==========================================
+# Testing and code coverage
 # ==========================================
 .pytest_cache/
 .coverage
 htmlcov/
 .pypy_cache/
+.tox/
+coverage.xml
+*.cover
 
 # ==========================================
-# Systémový balast (Windows / macOS)
+# Saved images and data
 # ==========================================
-*.DS_Store
-Thumbs.db
+saved_images/
+saved_wisdom/
+*.jpg
+*.jpeg
+*.png
+!doc/
+!warning.png
+
+# ==========================================
+# Miscellaneous
+# ==========================================
+*.log
+.DS_Store
 desktop.ini
