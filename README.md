@@ -1,12 +1,38 @@
 # Dog Diary
 
-[![Paw-some Project](https://img.shields.io/badge/🐾-Paw--some%20Project-orange?style=flat-square)](#)
-[![Dog Approved](https://img.shields.io/badge/Dog-Approved-brightgreen?style=flat-square&logo=dog&logoColor=white)](#)
-[![Cat Facts Inside](https://img.shields.io/badge/Cat%20Facts-100%25-blueviolet?style=flat-square&logo=cat&logoColor=white)](#)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
-[![Made with Tkinter](https://img.shields.io/badge/Made%20with-Tkinter-blue?style=flat-square&logo=python)](#)
-[![Random Dog API](https://img.shields.io/badge/API-dog.ceo-lightgrey?style=flat-square)](https://dog.ceo/)
-[![Catfact Ninja](https://img.shields.io/badge/API-catfact.ninja-lightgrey?style=flat-square)](https://catfact.ninja/)
+<p align="center">
+  <!-- Paw-some Project -->
+  <img src="https://img.shields.io/badge/%F0%9F%90%BE-Paw--some%20Project-orange" alt="Paw-some Project">
+
+  <!-- Dog Approved -->
+  <img src="https://img.shields.io/badge/Dog-Approved-brightgreen?logo=dog&logoColor=white" alt="Dog Approved">
+
+  <!-- Cat Facts Inside -->
+  <img src="https://img.shields.io/badge/Cat%20Facts-100%25-blueviolet?logo=cat&logoColor=white" alt="Cat Facts Inside">
+
+  <!-- License -->
+  <a href="https://github.com/hrosicka/DogDiary/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT">
+  </a>
+
+  <!-- Made with Tkinter -->
+  <img src="https://img.shields.io/badge/Made%20with-Tkinter-blue?logo=python&logoColor=white" alt="Made with Tkinter">
+
+  <!-- Random Dog API -->
+  <a href="https://dog.ceo/" target="_blank">
+    <img src="https://img.shields.io/badge/API-dog.ceo-lightgrey" alt="Random Dog API">
+  </a>
+
+  <!-- Catfact Ninja -->
+  <a href="https://catfact.ninja/" target="_blank">
+    <img src="https://img.shields.io/badge/API-catfact.ninja-lightgrey" alt="Catfact Ninja">
+  </a>
+
+  <!-- GitHub Actions Tests -->
+  <a href="https://github.com/hrosicka/DogDiary/actions/workflows/tests.yml">
+    <img src="https://github.com/hrosicka/DogDiary/actions/workflows/tests.yml/badge.svg" alt="Tests">
+  </a>
+</p>
 
 Woof! This app 🐶🐾🐶 is a paw-some way to see adorable doggos and discover fun facts about their feline friends.
 Based on Cat Facts API: https://catfact.ninja/fact and on Dog API: https://dog.ceo/api/breeds/image/random
