@@ -10,6 +10,7 @@ class BackgroundColorManager:
         available_colors: A dictionary of available color names and their corresponding hex codes.
         current_color: The currently set background color.
     """
+
     def __init__(self, widget):
         self.widget = widget
         # Define a dictionary to store background colors with descriptive names
@@ -17,7 +18,7 @@ class BackgroundColorManager:
             "Light Gray": "#F2F2F2",
             "Light Ivory": "#FFFAFA",
             "Sky Blue": "#F0FFFF",
-            "Peach": "#FFE4B5"
+            "Peach": "#FFE4B5",
         }
         self.current_color = "Light Gray"  # Default color
 

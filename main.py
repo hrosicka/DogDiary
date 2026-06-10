@@ -1,4 +1,5 @@
 from ctypes import windll
+
 windll.shcore.SetProcessDpiAwareness(1)
 
 import tkinter as tk
@@ -13,6 +14,7 @@ import win32clipboard
 from idlelib.tooltip import Hovertip
 from BackgroundColorManager import BackgroundColorManager
 from io import BytesIO
+
 
 class DogImageApp(tk.Tk):
     """
@@ -39,42 +41,47 @@ class DogImageApp(tk.Tk):
         background_manager = BackgroundColorManager(self)
 
         self.title("Dog Diary")
-        self.resizable(False, False) 
+        self.resizable(False, False)
         self.geometry("600x700")
 
         dirname = os.path.dirname(__file__)
-        #self.icon_path = os.path.join(dirname, 'IconUser.ico')  # Replace with your icon file path
-        #self.iconbitmap(self.icon_path)  # Set the window icon
-        self.warning_ico_path = os.path.join(dirname, 'warning.png') 
+        # self.icon_path = os.path.join(dirname, 'IconUser.ico')  # Replace with your icon file path
+        # self.iconbitmap(self.icon_path)  # Set the window icon
+        self.warning_ico_path = os.path.join(dirname, "warning.png")
 
         self.button_frame = tk.Frame(self)
         self.image_frame = tk.Frame(self)
         self.wisdom_frame = tk.Frame(self)
 
         # "What am I thinking about cats?" button with tooltip
-        self.button = customtkinter.CTkButton(master=self.button_frame,
-                                text="What am I thinking about cats?",
-                                command=self.show_dog_and_wisdom,
-                                width=300,
-                                text_color="white",
-                                fg_color="#2D1E2F",
-                                hover_color="#F15946")
+        self.button = customtkinter.CTkButton(
+            master=self.button_frame,
+            text="What am I thinking about cats?",
+            command=self.show_dog_and_wisdom,
+            width=300,
+            text_color="white",
+            fg_color="#2D1E2F",
+            hover_color="#F15946",
+        )
         self.button.grid(row=1, column=1, columnspan=3, padx=2, pady=5)
-        
+
         self.button_tooltip = (
             "Unleash the secrets of the feline mind...\n"
             "through a dog image and a cat fact!\n"
-            "Generate a new dog image and cat fact.")
+            "Generate a new dog image and cat fact."
+        )
         Hovertip(self.button, self.button_tooltip)
 
         # Additional buttons with tooltips
-        self.new_idea_button = customtkinter.CTkButton(master=self.button_frame,
-                                                   text="I'll Think Again",
-                                                   command=self.show_new_idea,
-                                                   width=150,
-                                                   text_color="white",
-                                                   fg_color="#2D1E2F",
-                                                   hover_color="#F15946")
+        self.new_idea_button = customtkinter.CTkButton(
+            master=self.button_frame,
+            text="I'll Think Again",
+            command=self.show_new_idea,
+            width=150,
+            text_color="white",
+            fg_color="#2D1E2F",
+            hover_color="#F15946",
+        )
         self.new_idea_button.grid(row=2, column=1, columnspan=1, padx=2, pady=5)
 
         self.new_idea_button_tooltip = (
@@ -84,54 +91,59 @@ class DogImageApp(tk.Tk):
         )
         Hovertip(self.new_idea_button, self.new_idea_button_tooltip)
 
-
         # Additional buttons with tooltips
-        self.copy_image_button = customtkinter.CTkButton(master=self.button_frame,
-                                                   text="Copy Image",
-                                                   command=self.copy_image_to_clipboard,
-                                                   width=150,
-                                                   text_color="white",
-                                                   fg_color="#2D1E2F",
-                                                   hover_color="#F15946")
+        self.copy_image_button = customtkinter.CTkButton(
+            master=self.button_frame,
+            text="Copy Image",
+            command=self.copy_image_to_clipboard,
+            width=150,
+            text_color="white",
+            fg_color="#2D1E2F",
+            hover_color="#F15946",
+        )
         self.copy_image_button.grid(row=2, column=2, columnspan=1, padx=2, pady=5)
 
-        self.copy_image_button_tooltip = "Because sharing is caring!\nCopy the current doggo to your clipboard."
+        self.copy_image_button_tooltip = (
+            "Because sharing is caring!\nCopy the current doggo to your clipboard."
+        )
         Hovertip(self.copy_image_button, self.copy_image_button_tooltip)
 
-
         # Additional buttons with tooltips
-        self.save_button = customtkinter.CTkButton(master=self.button_frame,
-                                                   text="Save Image",
-                                                   command=self.save_image,
-                                                   width=150,
-                                                   text_color="white",
-                                                   fg_color="#2D1E2F",
-                                                   hover_color="#F15946")
+        self.save_button = customtkinter.CTkButton(
+            master=self.button_frame,
+            text="Save Image",
+            command=self.save_image,
+            width=150,
+            text_color="white",
+            fg_color="#2D1E2F",
+            hover_color="#F15946",
+        )
         self.save_button.grid(row=2, column=3, columnspan=1, padx=2, pady=5)
 
         self.save_button_tooltip = (
             "Because who doesn't need more adorable doggo in their life?\n"
-            "Save the current image to a file.")
+            "Save the current image to a file."
+        )
         Hovertip(self.save_button, self.save_button_tooltip)
 
-
-        self.new_doggo_button = customtkinter.CTkButton(master=self.button_frame,
-                                       text="Not My Idea",
-                                       command=self.show_new_doggo,
-                                       width=150,
-                                       text_color="white",
-                                       fg_color="#2D1E2F",
-                                       hover_color="#F15946")
+        self.new_doggo_button = customtkinter.CTkButton(
+            master=self.button_frame,
+            text="Not My Idea",
+            command=self.show_new_doggo,
+            width=150,
+            text_color="white",
+            fg_color="#2D1E2F",
+            hover_color="#F15946",
+        )
         self.new_doggo_button.grid(row=3, column=1, columnspan=1, padx=2, pady=5)
 
         self.new_doggo_button_tooltip = (
-        "I am not feeling the cat vibes. How about a different dog?\n"
-        "Displays a new dog image.\n"
-        "Only the dog image is updated; the cat wisdom remains the same."
+            "I am not feeling the cat vibes. How about a different dog?\n"
+            "Displays a new dog image.\n"
+            "Only the dog image is updated; the cat wisdom remains the same."
         )
         Hovertip(self.new_doggo_button, self.new_doggo_button_tooltip)
 
-    
         self.copy_button = customtkinter.CTkButton(
             master=self.button_frame,
             text="Copy Wisdom",
@@ -145,9 +157,9 @@ class DogImageApp(tk.Tk):
 
         self.copy_button_tooltip = (
             "Don't let these wise words go to the dogs!\n"
-            "Copy the cat fact to your clipboard.")
+            "Copy the cat fact to your clipboard."
+        )
         Hovertip(self.copy_button, self.copy_button_tooltip)
-
 
         self.save_wisdom_button = customtkinter.CTkButton(
             master=self.button_frame,
@@ -162,14 +174,16 @@ class DogImageApp(tk.Tk):
 
         self.save_wisdom_button_tooltip = (
             "Don't let these wise words go to the dogs!\n"
-            "Save the cat fact to a text file.")
+            "Save the cat fact to a text file."
+        )
         Hovertip(self.save_wisdom_button, self.save_wisdom_button_tooltip)
 
-
-        self.color_label = customtkinter.CTkLabel(master=self.button_frame,
-                                                   text="Background Color",
-                                                   width=150,
-                                                   text_color="#2D1E2F")
+        self.color_label = customtkinter.CTkLabel(
+            master=self.button_frame,
+            text="Background Color",
+            width=150,
+            text_color="#2D1E2F",
+        )
         self.color_label.grid(row=4, column=1, columnspan=1, padx=2, pady=5)
 
         # Create a dropdown menu for background colors
@@ -186,14 +200,13 @@ class DogImageApp(tk.Tk):
         )
         self.color_menu.grid(row=4, column=2, columnspan=1, padx=2, pady=5)
 
-        
-        self.dog_image_label = customtkinter.CTkLabel(self.image_frame, text='')
+        self.dog_image_label = customtkinter.CTkLabel(self.image_frame, text="")
         self.dog_image_label.grid(row=1, column=1, columnspan=3, padx=30, pady=10)
 
-
-        self.wisdom_label = customtkinter.CTkLabel(self.wisdom_frame, wraplength=400, text='')
+        self.wisdom_label = customtkinter.CTkLabel(
+            self.wisdom_frame, wraplength=400, text=""
+        )
         self.wisdom_label.grid(row=2, column=1, columnspan=3, padx=30, pady=10)
-
 
         self.button_frame.pack(side=tk.TOP, padx=10, pady=10)
         self.image_frame.pack(side=tk.TOP, padx=10, pady=10)
@@ -202,18 +215,20 @@ class DogImageApp(tk.Tk):
     def show_new_idea(self):
 
         if not self.current_image:
-            CTkMessagebox(title="Error",
-                          message="Thinking about cats again? Perhaps a new doggo will inspire you! Press the button 'What am I thinking about cats?' first!",
-                          icon=self.warning_ico_path,
-                          icon_size=(100,100),
-                          fg_color="#F2F2F2",
-                          bg_color="light grey",
-                          button_text_color="white",
-                          button_width=80,
-                          button_color="#2D1E2F",
-                          button_hover_color="#F15946")
+            CTkMessagebox(
+                title="Error",
+                message="Thinking about cats again? Perhaps a new doggo will inspire you! Press the button 'What am I thinking about cats?' first!",
+                icon=self.warning_ico_path,
+                icon_size=(100, 100),
+                fg_color="#F2F2F2",
+                bg_color="light grey",
+                button_text_color="white",
+                button_width=80,
+                button_color="#2D1E2F",
+                button_hover_color="#F15946",
+            )
             return
-        
+
         try:
             cat_response = requests.get("https://catfact.ninja/fact")
             cat_data = cat_response.json()
@@ -225,31 +240,32 @@ class DogImageApp(tk.Tk):
             print(f"An error occurred: {e}")
             self.wisdom_label.configure(text="Failed to retrieve cat fact")
 
-
     def show_new_doggo(self):
         """
         Fetches a new random dog image and updates the display.
 
         This method:
         1. Fetches a new dog image URL from the dog.ceo API.
-        2. Updates the displayed image by calling self.show_dog_image() 
+        2. Updates the displayed image by calling self.show_dog_image()
         with the new URL.
         """
         wisdom_text = self.wisdom_label.cget("text")
 
         if wisdom_text == "":
-            CTkMessagebox(title="Error",
-                          message="Press the button 'What am I thinking about cats?' first!",
-                          icon=self.warning_ico_path,
-                          icon_size=(100,100),
-                          fg_color="#F2F2F2",
-                          bg_color="light grey",
-                          button_text_color="white",
-                          button_width=80,
-                          button_color="#2D1E2F",
-                          button_hover_color="#F15946")
+            CTkMessagebox(
+                title="Error",
+                message="Press the button 'What am I thinking about cats?' first!",
+                icon=self.warning_ico_path,
+                icon_size=(100, 100),
+                fg_color="#F2F2F2",
+                bg_color="light grey",
+                button_text_color="white",
+                button_width=80,
+                button_color="#2D1E2F",
+                button_hover_color="#F15946",
+            )
             return
-        
+
         try:
             dog_response = requests.get("https://dog.ceo/api/breeds/image/random")
             dog_data = dog_response.json()
@@ -258,8 +274,6 @@ class DogImageApp(tk.Tk):
         except Exception as e:
             print(f"Error fetching new dog image: {e}")
             self.dog_image_label.configure(text="Error fetching new dog image")
-
-
 
     def show_dog_and_wisdom(self):
         """
@@ -325,7 +339,9 @@ class DogImageApp(tk.Tk):
         if image_response.status_code == 200:
             try:
                 image = Image.open(image_response.raw)
-                self.current_image = image  # Assign the processed image to current_image
+                self.current_image = (
+                    image  # Assign the processed image to current_image
+                )
 
                 # Calculate the new dimensions to maintain aspect ratio
                 label_width, label_height = 300, 200  # Target dimensions for the label
@@ -333,14 +349,18 @@ class DogImageApp(tk.Tk):
                 image_width, image_height = image.size
 
                 # Determine the scaling factor based on the limiting dimension
-                scale_factor = min(label_width / image_width, label_height / image_height)
+                scale_factor = min(
+                    label_width / image_width, label_height / image_height
+                )
 
                 # Resize the image while maintaining aspect ratio
                 new_width = int(image_width * scale_factor)
                 new_height = int(image_height * scale_factor)
                 image = image.resize((new_width, new_height))
 
-                image_tk = customtkinter.CTkImage(light_image=image, size=(new_width , new_height))
+                image_tk = customtkinter.CTkImage(
+                    light_image=image, size=(new_width, new_height)
+                )
                 self.dog_image_label.configure(image=image_tk)
                 self.dog_image_label.image = image_tk
 
@@ -372,7 +392,7 @@ class DogImageApp(tk.Tk):
             wisdom_text (str): The raw cat fact text to be formatted and displayed.
         """
 
-        # No need to repeat the API call here, 
+        # No need to repeat the API call here,
         # assume `wisdom_text` already contains the fact.
 
         lines = []
@@ -409,64 +429,75 @@ class DogImageApp(tk.Tk):
         """
 
         if not self.current_image:
-            CTkMessagebox(title="Error",
-                          message="No image to save.",
-                          icon=self.warning_ico_path,
-                          icon_size=(100,100),
-                          fg_color="#F2F2F2",
-                          bg_color="light grey",
-                          button_text_color="white",
-                          button_width=80,
-                          button_color="#2D1E2F",
-                          button_hover_color="#F15946")
+            CTkMessagebox(
+                title="Error",
+                message="No image to save.",
+                icon=self.warning_ico_path,
+                icon_size=(100, 100),
+                fg_color="#F2F2F2",
+                bg_color="light grey",
+                button_text_color="white",
+                button_width=80,
+                button_color="#2D1E2F",
+                button_hover_color="#F15946",
+            )
             return
 
         # Get the file path where the image will be saved (using a file dialog)
-        file_path = tk.filedialog.asksaveasfilename(defaultextension=".png", filetypes=[("PNG image", "*.png")])
+        file_path = tk.filedialog.asksaveasfilename(
+            defaultextension=".png", filetypes=[("PNG image", "*.png")]
+        )
 
         if file_path:
             try:
                 # Save the image using the PIL library
                 self.current_image.save(file_path)
-                CTkMessagebox(title="Success", 
-                              message="Image saved successfully.",
-                              fg_color="#F2F2F2",
-                              bg_color="light grey",
-                              button_text_color="white",
-                              button_width=80,
-                              button_color="#2D1E2F",
-                              button_hover_color="#F15946")  
-                
-            except FileNotFoundError:
-                CTkMessagebox(title="Error", 
-                              message="Invalid file path. Please choose a valid location.",
-                              fg_color="#F2F2F2",
-                              bg_color="light grey",
-                              button_text_color="white",
-                              button_width=80,
-                              button_color="#2D1E2F",
-                              button_hover_color="#F15946")
-            
-            except OSError as e: # Catching OSError for other file system errors
-                CTkMessagebox(title="Error",
-                              message=f"A file system error occurred: {e}",
-                              fg_color="#F2F2F2",
-                              bg_color="light grey",
-                              button_text_color="white",
-                              button_width=80,
-                              button_color="#2D1E2F",
-                              button_hover_color="#F15946")
-            
-            except Exception as e: # Catching a general exception if other errors occur
-                CTkMessagebox(title="Error", 
-                              message=f"An unexpected error occurred while saving: {e}",
-                              fg_color="#F2F2F2",
-                              bg_color="light grey",
-                              button_text_color="white",
-                              button_width=80,
-                              button_color="#2D1E2F",
-                              button_hover_color="#F15946")
+                CTkMessagebox(
+                    title="Success",
+                    message="Image saved successfully.",
+                    fg_color="#F2F2F2",
+                    bg_color="light grey",
+                    button_text_color="white",
+                    button_width=80,
+                    button_color="#2D1E2F",
+                    button_hover_color="#F15946",
+                )
 
+            except FileNotFoundError:
+                CTkMessagebox(
+                    title="Error",
+                    message="Invalid file path. Please choose a valid location.",
+                    fg_color="#F2F2F2",
+                    bg_color="light grey",
+                    button_text_color="white",
+                    button_width=80,
+                    button_color="#2D1E2F",
+                    button_hover_color="#F15946",
+                )
+
+            except OSError as e:  # Catching OSError for other file system errors
+                CTkMessagebox(
+                    title="Error",
+                    message=f"A file system error occurred: {e}",
+                    fg_color="#F2F2F2",
+                    bg_color="light grey",
+                    button_text_color="white",
+                    button_width=80,
+                    button_color="#2D1E2F",
+                    button_hover_color="#F15946",
+                )
+
+            except Exception as e:  # Catching a general exception if other errors occur
+                CTkMessagebox(
+                    title="Error",
+                    message=f"An unexpected error occurred while saving: {e}",
+                    fg_color="#F2F2F2",
+                    bg_color="light grey",
+                    button_text_color="white",
+                    button_width=80,
+                    button_color="#2D1E2F",
+                    button_hover_color="#F15946",
+                )
 
     def copy_wisdom_to_clipboard(self):
         """
@@ -484,27 +515,31 @@ class DogImageApp(tk.Tk):
         wisdom_text = self.wisdom_label.cget("text")
 
         if wisdom_text == "":
-            CTkMessagebox(title="Error",
-                          message="No wisdom text to copy.",
-                          icon=self.warning_ico_path,
-                          icon_size=(100,100),
-                          fg_color="#F2F2F2",
-                          bg_color="light grey",
-                          button_text_color="white",
-                          button_width=80,
-                          button_color="#2D1E2F",
-                          button_hover_color="#F15946")
+            CTkMessagebox(
+                title="Error",
+                message="No wisdom text to copy.",
+                icon=self.warning_ico_path,
+                icon_size=(100, 100),
+                fg_color="#F2F2F2",
+                bg_color="light grey",
+                button_text_color="white",
+                button_width=80,
+                button_color="#2D1E2F",
+                button_hover_color="#F15946",
+            )
             return
-        
+
         pyperclip.copy(wisdom_text)
-        CTkMessagebox(title="Success",
-                        message="Text has been copied to the clipboard.",
-                        fg_color="#F2F2F2",
-                        bg_color="light grey",
-                        button_text_color="white",
-                        button_width=80,
-                        button_color="#2D1E2F",
-                        button_hover_color="#F15946")
+        CTkMessagebox(
+            title="Success",
+            message="Text has been copied to the clipboard.",
+            fg_color="#F2F2F2",
+            bg_color="light grey",
+            button_text_color="white",
+            button_width=80,
+            button_color="#2D1E2F",
+            button_hover_color="#F15946",
+        )
 
     def copy_image_to_clipboard(self):
         """Copies the current image to the clipboard in JPG format using win32clipboard.
@@ -514,16 +549,18 @@ class DogImageApp(tk.Tk):
         """
 
         if not self.current_image:
-            CTkMessagebox(title="Error",
-                          message="No image to copy.",
-                          icon=self.warning_ico_path,
-                          icon_size=(100,100),
-                          fg_color="#F2F2F2",
-                          bg_color="light grey",
-                          button_text_color="white",
-                          button_width=80,
-                          button_color="#2D1E2F",
-                          button_hover_color="#F15946")
+            CTkMessagebox(
+                title="Error",
+                message="No image to copy.",
+                icon=self.warning_ico_path,
+                icon_size=(100, 100),
+                fg_color="#F2F2F2",
+                bg_color="light grey",
+                button_text_color="white",
+                button_width=80,
+                button_color="#2D1E2F",
+                button_hover_color="#F15946",
+            )
             return
 
         # Uložení obrázku do paměti jako JPG
@@ -532,7 +569,7 @@ class DogImageApp(tk.Tk):
             data = output.getvalue()
 
         output = BytesIO()
-        self.current_image.convert('RGB').save(output, 'BMP')
+        self.current_image.convert("RGB").save(output, "BMP")
         data = output.getvalue()[14:]
         output.close()
 
@@ -541,15 +578,16 @@ class DogImageApp(tk.Tk):
         win32clipboard.SetClipboardData(win32clipboard.CF_DIB, data)
         win32clipboard.CloseClipboard()
 
-        CTkMessagebox(title="Success",
-                        message="Image has been copied to the clipboard.",
-                        fg_color="#F2F2F2",
-                        bg_color="light grey",
-                        button_text_color="white",
-                        button_width=80,
-                        button_color="#2D1E2F",
-                        button_hover_color="#F15946")
-
+        CTkMessagebox(
+            title="Success",
+            message="Image has been copied to the clipboard.",
+            fg_color="#F2F2F2",
+            bg_color="light grey",
+            button_text_color="white",
+            button_width=80,
+            button_color="#2D1E2F",
+            button_hover_color="#F15946",
+        )
 
     def save_wisdom(self):
         """
@@ -576,16 +614,18 @@ class DogImageApp(tk.Tk):
         wisdom_text = self.wisdom_label.cget("text")
 
         if wisdom_text == "":
-            CTkMessagebox(title="Error",
-                          message="No wisdom text to save.",
-                          icon=self.warning_ico_path,
-                          icon_size=(100,100),
-                          fg_color="#F2F2F2",
-                          bg_color="light grey",
-                          button_text_color="white",
-                          button_width=80,
-                          button_color="#2D1E2F",
-                          button_hover_color="#F15946")
+            CTkMessagebox(
+                title="Error",
+                message="No wisdom text to save.",
+                icon=self.warning_ico_path,
+                icon_size=(100, 100),
+                fg_color="#F2F2F2",
+                bg_color="light grey",
+                button_text_color="white",
+                button_width=80,
+                button_color="#2D1E2F",
+                button_hover_color="#F15946",
+            )
             return
 
         # Get the file path where the text will be saved (using a file dialog)
@@ -599,26 +639,30 @@ class DogImageApp(tk.Tk):
                 with open(file_path, "w") as f:
                     f.write(wisdom_text)
 
-                CTkMessagebox(title="Success", 
-                              message="Wisdom saved successfully.",
-                              fg_color="#F2F2F2",
-                              bg_color="light grey",
-                              button_text_color="white",
-                              button_width=80,
-                              button_color="#2D1E2F",
-                              button_hover_color="#F15946")
-                
+                CTkMessagebox(
+                    title="Success",
+                    message="Wisdom saved successfully.",
+                    fg_color="#F2F2F2",
+                    bg_color="light grey",
+                    button_text_color="white",
+                    button_width=80,
+                    button_color="#2D1E2F",
+                    button_hover_color="#F15946",
+                )
+
             except Exception as e:
-                CTkMessagebox(title="Error",
-                              message=f"An error occurred while saving: {str(e)}",
-                              icon=self.warning_ico_path,
-                              icon_size=(100,100),
-                              fg_color="#F2F2F2",
-                              bg_color="light grey",
-                              button_text_color="white",
-                              button_width=80,
-                              button_color="#2D1E2F",
-                              button_hover_color="#F15946")
+                CTkMessagebox(
+                    title="Error",
+                    message=f"An error occurred while saving: {str(e)}",
+                    icon=self.warning_ico_path,
+                    icon_size=(100, 100),
+                    fg_color="#F2F2F2",
+                    bg_color="light grey",
+                    button_text_color="white",
+                    button_width=80,
+                    button_color="#2D1E2F",
+                    button_hover_color="#F15946",
+                )
 
 
 # Run the main application loop if this script is executed directly
