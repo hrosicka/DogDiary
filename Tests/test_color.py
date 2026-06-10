@@ -3,10 +3,11 @@ import sys
 from unittest.mock import patch
 
 # Setting the path to the module to be tested
-sys.path.append('../DogDiary')
+sys.path.append("../DogDiary")
 from BackgroundColorManager import BackgroundColorManager
 
 from unittest.mock import MagicMock
+
 
 # Creating a mock widget to simulate the real widget's behavior
 class MockWidget:
@@ -16,6 +17,7 @@ class MockWidget:
         self.button_frame = MagicMock()
         self.image_frame = MagicMock()
         self.wisdom_frame = MagicMock()
+
 
 # Test class for the BackgroundColorManager
 class TestBackgroundColorManager(unittest.TestCase):
@@ -33,7 +35,7 @@ class TestBackgroundColorManager(unittest.TestCase):
 
     def test_set_invalid_color(self):
         # Test setting an invalid color
-        with patch('builtins.print') as mock_print:
+        with patch("builtins.print") as mock_print:
             self.manager.set_color("InvalidColor")
             mock_print.assert_called_with("Invalid Color: InvalidColor")
 
@@ -47,5 +49,6 @@ class TestBackgroundColorManager(unittest.TestCase):
         expected_colors = ["Light Gray", "Light Ivory", "Sky Blue", "Peach"]
         self.assertEqual(self.manager.get_available_colors(), expected_colors)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
