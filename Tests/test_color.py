@@ -21,7 +21,6 @@ class MockWidget:
 
 # Test class for the BackgroundColorManager
 class TestBackgroundColorManager(unittest.TestCase):
-
     def setUp(self):
         # Create a mock widget and initialize the manager
         self.widget = MockWidget()
