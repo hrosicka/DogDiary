@@ -6,7 +6,7 @@ Tests color management functionality.
 import os
 import sys
 import pytest
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 # Dynamically add the parent directory to sys.path BEFORE importing local modules
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
