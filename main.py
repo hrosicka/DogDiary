@@ -1,7 +1,3 @@
-from ctypes import windll
-
-windll.shcore.SetProcessDpiAwareness(1)
-
 import tkinter as tk
 import customtkinter
 from CTkMessagebox import CTkMessagebox
@@ -14,6 +10,9 @@ import win32clipboard
 from idlelib.tooltip import Hovertip
 from BackgroundColorManager import BackgroundColorManager
 from io import BytesIO
+from ctypes import windll
+
+windll.shcore.SetProcessDpiAwareness(1)
 
 
 class DogImageApp(tk.Tk):
