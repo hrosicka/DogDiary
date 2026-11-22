@@ -97,7 +97,7 @@ class TestBackgroundColorManager:
         """Test that color hex values are valid."""
         manager = BackgroundColorManager(mock_widget)
 
-        for color_name, hex_value in manager.available_colors.items():
+        for hex_value in manager.available_colors.values():
             assert hex_value.startswith("#")
             assert len(hex_value) == 7  # #RRGGBB
             # Check valid hex characters
