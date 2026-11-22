@@ -1,16 +1,18 @@
-import tkinter as tk
-import customtkinter
-from CTkMessagebox import CTkMessagebox
-import requests
-from PIL import Image
-import os  # Import the 'os' module for file path manipulation
-import pyperclip
 import io
-import win32clipboard
-from idlelib.tooltip import Hovertip
-from BackgroundColorManager import BackgroundColorManager
-from io import BytesIO
+import os  # Import the 'os' module for file path manipulation
+import tkinter as tk
 from ctypes import windll
+from idlelib.tooltip import Hovertip
+from io import BytesIO
+
+import customtkinter
+import pyperclip
+import requests
+import win32clipboard
+from CTkMessagebox import CTkMessagebox
+from PIL import Image
+
+from BackgroundColorManager import BackgroundColorManager
 
 windll.shcore.SetProcessDpiAwareness(1)
 
@@ -652,7 +654,7 @@ class DogImageApp(tk.Tk):
             except Exception as e:
                 CTkMessagebox(
                     title="Error",
-                    message=f"An error occurred while saving: {str(e)}",
+                    message=f"An error occurred while saving: {e}",
                     icon=self.warning_ico_path,
                     icon_size=(100, 100),
                     fg_color="#F2F2F2",

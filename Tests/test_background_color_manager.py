@@ -5,8 +5,9 @@ Tests color management functionality.
 
 import os
 import sys
-import pytest
 from unittest.mock import MagicMock
+
+import pytest
 
 # Dynamically add the parent directory to sys.path BEFORE importing local modules
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -96,7 +97,7 @@ class TestBackgroundColorManager:
         """Test that color hex values are valid."""
         manager = BackgroundColorManager(mock_widget)
 
-        for color_name, hex_value in manager.available_colors.items():
+        for hex_value in manager.available_colors.values():
             assert hex_value.startswith("#")
             assert len(hex_value) == 7  # #RRGGBB
             # Check valid hex characters
