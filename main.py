@@ -653,7 +653,7 @@ class DogImageApp(tk.Tk):
             except Exception as e:
                 CTkMessagebox(
                     title="Error",
-                    message=f"An error occurred while saving: {str(e)}",
+                    message=f"An error occurred while saving: {e}",
                     icon=self.warning_ico_path,
                     icon_size=(100, 100),
                     fg_color="#F2F2F2",
