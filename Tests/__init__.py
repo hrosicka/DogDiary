@@ -1,6 +1,7 @@
 """Test suite for DogDiary application."""
 
 import os
+
 import pytest
 
 if __name__ == "__main__":

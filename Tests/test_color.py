@@ -1,12 +1,12 @@
-import unittest
 import sys
+import unittest
 from unittest.mock import patch
 
 # Setting the path to the module to be tested
 sys.path.append("../DogDiary")
-from BackgroundColorManager import BackgroundColorManager
-
 from unittest.mock import MagicMock
+
+from BackgroundColorManager import BackgroundColorManager
 
 
 # Creating a mock widget to simulate the real widget's behavior
